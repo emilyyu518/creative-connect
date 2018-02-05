@@ -1,5 +1,5 @@
 angular.module('app')
-.component('list', {
+.component('moodBoard', {
   bindings: {
     items: '<',
   },
