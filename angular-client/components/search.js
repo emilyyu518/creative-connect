@@ -3,6 +3,14 @@ angular.module('app')
   bindings: {
     // items: '<',
   },
-  controller: function() {},
+  controller: function(searchService) {
+    this.handleClick = function(query) {
+      searchService.behance(query, (results) => {
+        if (results) {
+
+        }
+      });
+    }
+  },
   templateUrl: '/templates/search.html'
 });
