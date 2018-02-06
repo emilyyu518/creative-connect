@@ -11,6 +11,8 @@ angular.module('app')
           this.populate(results);
         }
       });
+      // clear input field after submission
+      this.query = '';
     };
   },
   templateUrl: '/templates/search.html'
