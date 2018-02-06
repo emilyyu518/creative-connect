@@ -8,4 +8,22 @@ angular.module('app')
   bindings: {},
   controller: 'AppCtrl',
   templateUrl: '/templates/app.html'
-});
+})
+// .config(function($routeProvider) {
+//   $routeProvider
+//   // .when('/', {
+//   //   templateUrl: '/templates/app.html' 
+//   // })
+//   .when('/mood-board', {
+//     templateUrl: '/templates/mood-board.html',
+//     controller: 'moodBoard'  
+//   })
+//   .when('/search-results', {
+//     templateUrl: '/templates/search-results.html',
+//     controller: 'searchResults'
+//   })
+//   .otherwise({
+//     templateUrl: '/templates/mood-board.html',
+//     controller: 'moodBoard'  
+//   })
+// });
