@@ -9,6 +9,16 @@ var behance = require('../helpers/behance')
 var app = express();
 
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 passport.use(new GoogleStrategy ({
     clientID: process.env.GOOGLE_CLIENT_ID,
@@ -34,10 +44,16 @@ app.use(express.static(__dirname + '/../node_modules'));
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
+app.get('/auth/google/callback', 
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  }));
+
 app.get('logout', function(request, response) {
   request.logout();
   response.redirect('/');
-})
+});
 
 app.post('/search', function(request, response) {
   const query = request.body.query;
@@ -78,13 +94,42 @@ app.post('/mood-board', function(request, response) {
 });
 
 app.get('/mood-board', function (request, response) {
-  db.selectAll(function(error, data) {
-    if(error) {
-      response.sendStatus(500);
-    } else {
-      response.json(data);
-    }
-  });
+  if(request.user) {
+    db.selectAll(function(error, data) {
+      if(error) {
+        response.sendStatus(500);
+      } else {
+        response.json(data);
+      }
+    });
+  } else {
+    behance.searchBehance('', (error, res, body) => {
+      if (error) {
+        console.error("Error searching Behance! ", error);
+      } else {
+        const projects = JSON.parse(body).projects;
+        const projectsResponse = projects.map(project => {
+          projectRecord = {};
+          projectRecord.name = project.name;
+          projectRecord.url = project.url;
+          projectRecord.imgUrl = project.covers["404"];
+          projectRecord.creators = project.owners.map(owner => {
+            const creator = {};
+            creator.name = owner.display_name;
+            let tempUrl = owner.website ? owner.website : owner.url;
+            if (!tempUrl.includes("https") || !tempUrl.includes("http")) {
+              creator.url = `http://${tempUrl}`;
+            } else {
+              creator.url = tempUrl;
+            }
+            return creator;
+          });
+          return projectRecord;
+        });
+        response.end(JSON.stringify(projectsResponse));
+      }
+    });
+  }
 });
 
 const port = process.env.PORT || 3000;

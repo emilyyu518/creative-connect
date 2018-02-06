@@ -14,5 +14,6 @@ body {
 
 .thumbnail {
   min-height: 500px;
+  max-width: 405px;
 }
 
