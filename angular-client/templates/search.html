@@ -1,8 +1,6 @@
 <div>
   <form class="form-inline">
-    <div class="col-sm-10">
-      <input type="search" class="form-control" id="search" placeholder="Search...">
-    </div>
-    <button type="submit" class="btn btn-primary mb-2">Search!</button>
+    <input type="search" class="form-control" id="search" placeholder="Search..." ng-model="$ctrl.query">
+    <button id="search-button" type="submit" class="btn btn-primary" ng-click="$ctrl.handleClick($ctrl.query)">Search!</button>
   </form>
 </div>

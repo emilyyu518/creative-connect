@@ -26,8 +26,8 @@ app.post('/search', function(request, response) {
 
         // db.save(projectRecord);
       });
+      response.end(JSON.stringify(projectsResponse));
     }
-    response.end(JSON.stringify(projectsResponse));
   })
 });
 

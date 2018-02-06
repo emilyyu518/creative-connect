@@ -7,7 +7,7 @@ angular.module('app')
     this.handleClick = function(query) {
       searchService.behance(query, (results) => {
         if (results) {
-
+          console.log('results!!!1 ', results);
         }
       });
     }
