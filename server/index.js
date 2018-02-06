@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var items = require('../database-mongo');
+var db = require('../database-mongo');
 var behance = require('../helpers/behance')
 
 var app = express();
@@ -20,20 +20,21 @@ app.post('/search', function(request, response) {
         projectRecord.name = project.name;
         projectRecord.url = project.url;
         projectRecord.imgUrl = project.covers['404'];
-        projectRecord.creator = project.owners[0].display_name;
-        projectRecord.creatorUrl = project.owners[0].website ? project.owners[0].website : project.owners[0].url;
+        projectRecord.creators = project.owners;
+        
         db.save(projectRecord);
       });
     }
     response.end();
   })
 });
-app.get('/items', function (req, res) {
-  items.selectAll(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
+
+app.get('/mood-board', function (request, response) {
+  db.selectAll(function(error, data) {
+    if(error) {
+      response.sendStatus(500);
     } else {
-      res.json(data);
+      response.json(data);
     }
   });
 });
