@@ -1,10 +1,10 @@
 <div class="thumbnail">
-  <a href={{$ctrl.project.url}}>
+  <a href={{$ctrl.project.url}} target="_blank">
     <img ng-src={{$ctrl.project.imgUrl}}>
   </a>
   <div class="caption">
     <h4>{{$ctrl.project.name}}</h4>
-    <p ng-repeat="creator in $ctrl.project.creators"><a href={{creator.url}}>{{creator.name}} </a></p>
+    <p ng-repeat="creator in $ctrl.project.creators"><a href={{creator.url}} target="_blank">{{creator.name}} </a></p>
     <button type="button" class="btn btn-default btn-lg" ng-click="$ctrl.handleClick($ctrl.project)">
       <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
     </button>
