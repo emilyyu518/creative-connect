@@ -25,7 +25,12 @@ app.post('/search', function(request, response) {
         projectRecord.creators = project.owners.map((owner) => {
           const creator = {};
           creator.name = owner.display_name;
-          creator.url = owner.website ? owner.website : owner.url;
+          let tempUrl = owner.website ? owner.website : owner.url;
+          if (!tempUrl.includes('https') || !tempUrl.includes('http')) {
+            creator.url = `http://${tempUrl}`;
+          } else {
+            creator.url = tempUrl;
+          }
           return creator;
         });
         return projectRecord;

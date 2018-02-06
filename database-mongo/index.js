@@ -52,6 +52,7 @@ const save = function(project) {
   creators.forEach((creator) => {
     let name = creator.name;
     let url = creator.url;
+
     projectRecord.creators.push({ name, url });
   });
 
