@@ -50,8 +50,8 @@ const save = function(project) {
   const projectRecord = new Project({ name, url, imgUrl });
 
   creators.forEach((creator) => {
-    let name = creator.display_name;
-    let url = creator.website ? creator.website : creator.url;
+    let name = creator.name;
+    let url = creator.url;
     projectRecord.creators.push({ name, url });
   });
 
@@ -59,7 +59,7 @@ const save = function(project) {
     if (error) {
       console.error('Error saving project to database! ', error);
     } else {
-      console.log('Successfully saved project to database!');
+      console.log('Successfully saved project to database!', projectRecord);
     }
   });
 };

@@ -3,12 +3,14 @@ angular.module('app')
   bindings: {
     project: '<',
   },
-  controller: function() {
-    // this.getCreators = (project) => {
-    //   project.creators.forEach((creator) => {
-
-    //   })
-    // };
+  controller: function(addToDatabaseService) {
+    this.handleClick = function(project) {
+      addToDatabaseService.pin(project, (results) => {
+        if (results) {
+          console.log('sent to database! ', results);
+        }
+      })
+    };
   },
   templateUrl: '/templates/mood-board-item.html'
 });

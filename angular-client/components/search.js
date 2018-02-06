@@ -11,7 +11,7 @@ angular.module('app')
           this.populate(results);
         }
       });
-    }
+    };
   },
   templateUrl: '/templates/search.html'
 });

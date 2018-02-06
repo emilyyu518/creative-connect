@@ -29,11 +29,16 @@ app.post('/search', function(request, response) {
           return creator;
         });
         return projectRecord;
-        // db.save(projectRecord);
       });
       response.end(JSON.stringify(projectsResponse));
     }
   })
+});
+
+app.post('/mood-board', function(request, response) {
+  // get project information 
+  const project = request.body.project;
+  db.save(project);
 });
 
 app.get('/mood-board', function (request, response) {
@@ -45,6 +50,7 @@ app.get('/mood-board', function (request, response) {
     }
   });
 });
+
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

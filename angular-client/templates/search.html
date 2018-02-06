@@ -1,8 +1,9 @@
-<div>
+<div id="search-bar">
   <form class="form-inline">
     <input type="search" class="form-control" id="search" placeholder="Search..." ng-model="$ctrl.query">
     <a href="/search-results">
-      <button id="search-button" type="submit" class="btn btn-primary" ng-click="$ctrl.handleClick($ctrl.query)">Search!</button>
+      <button id="search-button" type="submit" class="btn btn-primary" ng-click="$ctrl.handleClick($ctrl.query)"><i class="glyphicon glyphicon-search"></i></button>
     </a>
   </form>
 </div>
+
