@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var dotenv = require('dotenv').config();
 var db = require('../database-mongo');
 var behance = require('../helpers/behance')
@@ -9,62 +9,29 @@ var behance = require('../helpers/behance')
 var app = express();
 
 app.use(bodyParser.json());
-app.use(cookieParser('shhhh, very secret'));
-app.use(session({
-  secret: 'shhh, it\'s a secret',
-  resave: false,
-  saveUninitialized: true
-}));
+passport.use(new GoogleStrategy ({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: '/auth/google/callback'
+  }, 
+  function(accessToken, refreshToken, profile, done) {
+    db.User.findOne({username: profile.id}, function(err, user) {
+      if (err) {
+        return done(err);
+      } if (user) {
+        return done(null, user);
+      } else {
+        db.User.create({username: profile.id});
+      }
+    });
+  }
+))
 
 app.use(express.static(__dirname + '/../angular-client'));
 app.use(express.static(__dirname + '/../node_modules'));
 
-app.post('/sign-up', function(request, response) {
-  const username = request.body.username;
-  const password = request.body.password;
-
-  User
-  .findOne({ username: username })
-  .then(function(user) {
-    if (!user) {
-      var newUser = new User({
-        username: username,
-        password: password
-      });
-      newUser.save().then(function(newUser) {
-        util.createSession(request, response, newUser);
-      });
-    } else {
-      console.log('Account already exists');
-      response.redirect('/sign-up');
-    }
-  });
-});
-
-app.post('/log-in', function(request, response) {
-  const username = request.body.username;
-  const password = request.body.password;
-
-  User.findOne({ username: username }).then(function(user) {
-    if (!user) {
-      response.redirect('/log-in');
-    } else {
-      user.comparePassword(password, function(match) {
-        if (match) {
-          util.createSession(request, response, user);
-        } else {
-          response.redirect('/login');
-        }
-      });
-    }
-  });
-});
-
-app.get('/log-out', function(request, response) {
-  request.session.destroy(function() {
-    response.redirect('/login');
-  })
-});
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
 app.post('/search', function(request, response) {
   const query = request.body.query;
@@ -99,7 +66,8 @@ app.post('/search', function(request, response) {
 app.post('/mood-board', function(request, response) {
   // get project information 
   const project = request.body.project;
-  db.save(project);
+  const user = request.user;
+  db.save(user, project);
   response.end();
 });
 
