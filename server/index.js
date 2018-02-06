@@ -10,6 +10,14 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../angular-client'));
 app.use(express.static(__dirname + '/../node_modules'));
 
+app.post('/sign-up', function(request, response) {
+
+});
+
+app.post('/log-in', function(request, response) {
+
+});
+
 app.post('/search', function(request, response) {
   const query = request.body.query;
   behance.searchBehance(query, (error, res, body) => {
