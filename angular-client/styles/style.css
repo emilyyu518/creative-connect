@@ -2,6 +2,11 @@ body {
   padding: 30px;
 }
 
+.navbar-default {
+  background-color: white !important;
+  border-color: white !important;
+}
+
 #heading {
   font-family: 'Monoton';
   padding-bottom: 30px;

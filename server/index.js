@@ -9,6 +9,7 @@ var behance = require('../helpers/behance')
 var app = express();
 
 app.use(bodyParser.json());
+
 passport.use(new GoogleStrategy ({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -32,6 +33,11 @@ app.use(express.static(__dirname + '/../node_modules'));
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
+
+app.get('logout', function(request, response) {
+  request.logout();
+  response.redirect('/');
+})
 
 app.post('/search', function(request, response) {
   const query = request.body.query;

@@ -1,11 +1,15 @@
 <div>
   <div>
-    <header>
-      <h1 id="heading" ng-click="$ctrl.handleClick()">CreativeConnect</h1>
-      <p class="navbar-text navbar-right">
-        <a href="/auth/google">Sign In with Google</a>
-      </p>
-    </header>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <h1 id="heading" ng-click="$ctrl.handleClick()">CreativeConnect</h1>
+        </div>
+        <p class="navbar-text navbar-right">
+          <a href="/auth/google" class="btn btn-default"><span class="fa fa-google-plus"></span> Sign In with Google</a>
+        </p>
+      </div>
+    </nav>
     <search populate="$ctrl.populateProjects"> hello I'm here </search>
     <ng-view>
       <mood-board populate="$ctrl.populateProjects" projects="$ctrl.projects"/>
