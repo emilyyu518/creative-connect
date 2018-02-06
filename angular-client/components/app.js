@@ -1,8 +1,12 @@
 angular.module('app')
 .controller('AppCtrl', function(moodBoardItemsService) {
   moodBoardItemsService.getAll((data) => {
-    this.projects = data;
+    this.populateProjects(data);
   });
+
+  this.populateProjects = (data) => {
+    this.projects = data;
+  };
 })
 .component('app', {
   bindings: {},

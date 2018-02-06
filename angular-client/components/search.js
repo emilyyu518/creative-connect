@@ -1,13 +1,14 @@
 angular.module('app')
 .component('search', {
   bindings: {
-    // items: '<',
+    populate: '<',
   },
   controller: function(searchService) {
     this.handleClick = function(query) {
       searchService.behance(query, (results) => {
         if (results) {
           console.log('results!!!1 ', results);
+          this.populate(results);
         }
       });
     }

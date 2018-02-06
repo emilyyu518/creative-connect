@@ -23,7 +23,7 @@ app.post('/search', function(request, response) {
         projectRecord.url = project.url;
         projectRecord.imgUrl = project.covers['404'];
         projectRecord.creators = project.owners;
-
+        return projectRecord;
         // db.save(projectRecord);
       });
       response.end(JSON.stringify(projectsResponse));
