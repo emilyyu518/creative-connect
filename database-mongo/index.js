@@ -25,6 +25,7 @@ const projectSchema = mongoose.Schema({
 });
 
 const userSchema = mongoose.Schema({
+  google_id: Number, 
   username: String,
   projects: [projectSchema]
 });

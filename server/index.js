@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var dotenv = require('dotenv').config();
@@ -26,13 +27,15 @@ passport.use(new GoogleStrategy ({
     callbackURL: '/auth/google/callback'
   }, 
   function(accessToken, refreshToken, profile, done) {
-    db.User.findOne({username: profile.id}, function(err, user) {
+    db.User.findOne({google_id: profile.id}, function(err, user) {
       if (err) {
         return done(err);
       } if (user) {
         return done(null, user);
       } else {
-        db.User.create({username: profile.id});
+        db.User.create({
+          google_id: profile.id,
+          username: profile.displayName});
       }
     });
   }
