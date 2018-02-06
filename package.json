@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "angular": "^1.6.3",
+    "angular-route": "^1.6.9",
     "body-parser": "^1.17.2",
     "dotenv": "^5.0.0",
     "express": "^4.15.0",
