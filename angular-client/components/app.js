@@ -7,6 +7,12 @@ angular.module('app')
   this.populateProjects = (data) => {
     this.projects = data;
   };
+
+  this.handleClick = () => {
+    moodBoardItemsService.getAll(data => {
+      this.populateProjects(data);
+    });
+  };
 })
 .component('app', {
   bindings: {},
