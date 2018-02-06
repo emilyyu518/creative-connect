@@ -3,6 +3,12 @@ angular.module('app')
   bindings: {
     project: '<',
   },
-  controller: function() {},
+  controller: function() {
+    // this.getCreators = (project) => {
+    //   project.creators.forEach((creator) => {
+
+    //   })
+    // };
+  },
   templateUrl: '/templates/mood-board-item.html'
 });

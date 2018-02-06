@@ -1,9 +1,10 @@
-
-  <div class="thumbnail">
+<div class="thumbnail">
+  <a href={{$ctrl.project.url}}>
     <img ng-src={{$ctrl.project.imgUrl}}>
-    <div class="caption">
-      <h3>{{$ctrl.project.name}}</h3>
-      <p>Thumbnail caption...</p>
-    </div>
+  </a>
+  <div class="caption">
+    <h3>{{$ctrl.project.name}}</h3>
+    <p ng-repeat="creator in $ctrl.project.creators"><a href={{creator.url}}>{{creator.name}} </a></p>
   </div>
+</div>
 

@@ -22,7 +22,12 @@ app.post('/search', function(request, response) {
         projectRecord.name = project.name;
         projectRecord.url = project.url;
         projectRecord.imgUrl = project.covers['404'];
-        projectRecord.creators = project.owners;
+        projectRecord.creators = project.owners.map((owner) => {
+          const creator = {};
+          creator.name = owner.display_name;
+          creator.url = owner.website ? owner.website : owner.url;
+          return creator;
+        });
         return projectRecord;
         // db.save(projectRecord);
       });
