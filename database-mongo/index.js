@@ -60,7 +60,7 @@ const Project = mongoose.model('Projects', projectSchema);
 const Creator = mongoose.model('Creators', creatorSchema);
 
 const selectAll = function(callback) {
-  Project.find({}, function(err, projects) {
+  User.projects.find({}, function(err, projects) {
     if(err) {
       callback(err, null);
     } else {
@@ -69,25 +69,35 @@ const selectAll = function(callback) {
   });
 };
 
-const save = function(project) {
+const save = function(user, project) {
   const { name, url, imgUrl, creators } = project;
 
-  const projectRecord = new Project({ name, url, imgUrl });
+  User
+    .findOne({username: user})
+    .then(function(user) {
+      if (!user) {
+        console.log('Error! You\'re not logged in!');
+      } else {
+        const projectRecord = new Project({ name, url, imgUrl });
+      
+        creators.forEach((creator) => {
+          let name = creator.name;
+          let url = creator.url;
+      
+          projectRecord.creators.push({ name, url });
+        });
 
-  creators.forEach((creator) => {
-    let name = creator.name;
-    let url = creator.url;
+        user.projects.push(projectRecord);
+      }
+    })
 
-    projectRecord.creators.push({ name, url });
-  });
-
-  projectRecord.save((error) => {
-    if (error) {
-      console.error('Error saving project to database! ', error);
-    } else {
-      console.log('Successfully saved project to database!', projectRecord);
-    }
-  });
+  // projectRecord.save((error) => {
+  //   if (error) {
+  //     console.error('Error saving project to database! ', error);
+  //   } else {
+  //     console.log('Successfully saved project to database!', projectRecord);
+  //   }
+  // });
 };
 
 module.exports.selectAll = selectAll;
