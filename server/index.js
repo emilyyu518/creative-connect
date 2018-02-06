@@ -39,6 +39,7 @@ app.post('/mood-board', function(request, response) {
   // get project information 
   const project = request.body.project;
   db.save(project);
+  response.end();
 });
 
 app.get('/mood-board', function (request, response) {
