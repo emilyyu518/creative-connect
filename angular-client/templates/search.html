@@ -1,9 +1,21 @@
-<div id="search-bar">
-  <form class="form-inline">
-    <input type="search" class="form-control" id="search" placeholder="Search..." ng-model="$ctrl.query">
-    <a href="/search-results">
-      <button id="search-button" type="submit" class="btn btn-primary" ng-click="$ctrl.handleClick($ctrl.query)"><i class="glyphicon glyphicon-search"></i></button>
-    </a>
-  </form>
-</div>
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div id="imaginary-container">
+        <form class="form-group">
+          <div id="search-bar" class="input-group">
+            <input type="text" class="form-control" id="search" placeholder="Search..." ng-model="$ctrl.query">
+            <span class="input-group-btn">
+                <a href="/search-results">
+                  <button id="search-button" type="submit" class="btn btn-default" ng-click="$ctrl.handleClick($ctrl.query)">
+                    <i class="glyphicon glyphicon-search"></i>
+                  </button>
+                </a>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
