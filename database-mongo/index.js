@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/creative-connect');
+const url = process.env.MONGOLAB_URI || 'mongodb://localhost/creative-connect'
+mongoose.connect(url);
 
 const db = mongoose.connection;
 
@@ -23,13 +24,13 @@ const projectSchema = mongoose.Schema({
   creators: [creatorSchema]
 });
 
-const userSchema = mongoose.Schema({
-  username: String,
-  // password: String,
-  projects: [projectSchema]
-});
+// const userSchema = mongoose.Schema({
+//   username: String,
+//   // password: String,
+//   projects: [projectSchema]
+// });
 
-const User = mongoose.model('Users', userSchema);
+// const User = mongoose.model('Users', userSchema);
 const Project = mongoose.model('Projects', projectSchema);
 const Creator = mongoose.model('Creators', creatorSchema);
 
@@ -46,21 +47,22 @@ const selectAll = function(callback) {
 const save = function(project) {
   const { name, url, imgUrl, creators } = project;
 
-  const project = new Project({ name, url, imgUrl });
+  const projectRecord = new Project({ name, url, imgUrl });
 
   creators.forEach((creator) => {
     let name = creator.display_name;
     let url = creator.website ? creator.website : creator.url;
-    project.creators.push({ name, url });
+    projectRecord.creators.push({ name, url });
   });
 
-  project.save((error) => {
+  projectRecord.save((error) => {
     if (error) {
       console.error('Error saving project to database! ', error);
     } else {
-      console.log('Successfully save project to database!');
+      console.log('Successfully saved project to database!');
     }
   });
 };
 
 module.exports.selectAll = selectAll;
+module.exports.save = save;

@@ -1,12 +1,12 @@
 const request = require('request');
-const config = require('../config');
+const qs = require('querystring');
 
 const searchBehance = (query, callback) => {
   const options = {
     method: 'GET',
     url: 'https://api.behance.net/v2/projects',
-    data: {
-      client_id: config.BEHANCE_API_KEY,
+    qs: {
+      client_id: process.env.BEHANCE_API_KEY,
       q: query
     }
   }
