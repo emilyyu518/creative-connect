@@ -1,5 +1,7 @@
 <div>
   <h4> Your Mood Board </h4>
   There are {{$ctrl.projects.length}} items.
-  <mood-board-item ng-repeat="project in $ctrl.projects" project=project />
+  <div class="row thumbnails">
+    <mood-board-item class="col-md-4" ng-repeat="project in $ctrl.projects" project=project />
+  </div>
 </div>
