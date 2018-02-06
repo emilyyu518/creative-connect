@@ -1,7 +1,7 @@
 angular.module('app')
 .component('moodBoardItem', {
   bindings: {
-    item: '<',
+    project: '<',
   },
   controller: function() {},
   templateUrl: '/templates/mood-board-item.html'

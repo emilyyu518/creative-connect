@@ -1,7 +1,7 @@
 angular.module('app')
-.service('itemsService', function($http) {
+.service('moodBoardItemsService', function($http) {
   this.getAll = function(callback) {
-    $http.get('/items')
+    $http.get('/mood-board')
     .then(function({data}) {
       if(callback) {
         callback(data);

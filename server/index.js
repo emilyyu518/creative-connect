@@ -17,17 +17,17 @@ app.post('/search', function(request, response) {
       console.error('Error searching Behance! ', error);
     } else {
       const projects = JSON.parse(body).projects;
-      projects.forEach((project) => {
+      const projectsResponse = projects.map((project) => {
         projectRecord = {};
         projectRecord.name = project.name;
         projectRecord.url = project.url;
         projectRecord.imgUrl = project.covers['404'];
         projectRecord.creators = project.owners;
 
-        db.save(projectRecord);
+        // db.save(projectRecord);
       });
     }
-    response.end();
+    response.end(JSON.stringify(projectsResponse));
   })
 });
 

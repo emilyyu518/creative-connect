@@ -1,7 +1,7 @@
 angular.module('app')
-.component('list', {
+.component('search', {
   bindings: {
-    items: '<',
+    // items: '<',
   },
   controller: function() {},
   templateUrl: '/templates/search.html'
