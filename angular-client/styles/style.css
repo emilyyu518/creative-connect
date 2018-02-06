@@ -2,6 +2,16 @@ body {
   padding: 30px;
 }
 
+#heading {
+  font-family: 'Monoton';
+  padding-bottom: 30px;
+}
+
+#search-button {
+ background-color: rgb(179, 177, 177);
+}
+
 .thumbnail {
   min-height: 500px;
 }
+
