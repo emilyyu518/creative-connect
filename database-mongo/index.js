@@ -34,14 +34,20 @@ const User = mongoose.model('Users', userSchema);
 const Project = mongoose.model('Projects', projectSchema);
 const Creator = mongoose.model('Creators', creatorSchema);
 
-const selectAll = function(callback) {
-  User.projects.find({}, function(err, projects) {
-    if(err) {
-      callback(err, null);
+const selectAll = function(user, callback) {
+  User.findOne({username: user.username}, function(err, user) {
+    if (err) {
+      console.error(err);
     } else {
-      callback(null, projects);
+      user.projects.find({}, function(projects) {
+        if(!projects) {
+          console.log('no projects added yet');
+        } else {
+          callback(projects);
+        }
+      });
     }
-  });
+  })
 };
 
 const save = function(user, project) {
@@ -63,6 +69,13 @@ const save = function(user, project) {
         });
 
         user.projects.push(projectRecord);
+        user.save((err, updatedUser) => {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log('updated user! ', updatedUser);
+          }
+        });
       }
     })
 

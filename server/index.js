@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -10,6 +11,8 @@ var behance = require('../helpers/behance')
 var app = express();
 
 app.use(bodyParser.json());
+app.use(cookieParser('meowmeowmeow'));
+app.use(session({secret: 'meowmeowmeow'}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -91,19 +94,24 @@ app.post('/search', function(request, response) {
 app.post('/mood-board', function(request, response) {
   // get project information 
   const project = request.body.project;
-  const user = request.user;
+  const user = request.user.username;
   db.save(user, project);
   response.end();
 });
 
 app.get('/mood-board', function (request, response) {
   if(request.user) {
-    db.selectAll(function(error, data) {
-      if(error) {
-        response.sendStatus(500);
-      } else {
-        response.json(data);
+    db.selectAll(request.user, function(data) {
+      // if(error) {
+      //   console.error(error);
+      //   response.sendStatus(500);
+      // } else {
+      //   response.json(data);
+      // }
+      if (!data) {
+        console.error('error! no data');
       }
+      response.end(JSON.stringify(data));
     });
   } else {
     behance.searchBehance('', (error, res, body) => {
