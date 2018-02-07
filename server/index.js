@@ -102,12 +102,6 @@ app.post('/mood-board', function(request, response) {
 app.get('/mood-board', function (request, response) {
   if(request.user) {
     db.selectAll(request.user, function(data) {
-      // if(error) {
-      //   console.error(error);
-      //   response.sendStatus(500);
-      // } else {
-      //   response.json(data);
-      // }
       if (!data) {
         console.error('error! no data');
       }
