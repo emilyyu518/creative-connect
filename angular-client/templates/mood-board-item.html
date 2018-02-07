@@ -1,12 +1,13 @@
-<div class="thumbnail">
+<div class="card">
   <a href={{$ctrl.project.url}} target="_blank">
-    <img ng-src={{$ctrl.project.imgUrl}}>
+    <img class="card-img-top" ng-src={{$ctrl.project.imgUrl}}>
   </a>
-  <div class="caption">
-    <h4>{{$ctrl.project.name}}</h4>
-    <p ng-repeat="creator in $ctrl.project.creators"><a href={{creator.url}} target="_blank">{{creator.name}} </a></p>
-    <button type="button" class="btn btn-default btn-lg" ng-click="$ctrl.handleClick($ctrl.project)">
-      <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 
+  <div class="card-body">
+    <h4 class="card-title">{{$ctrl.project.name}}</h4>
+    <span class="creator-links" ng-repeat="creator in $ctrl.project.creators"><a class="card-link" href={{creator.url}} target="_blank">{{creator.name}} </a></span>
+    <br><br>
+    <button type="button" class="btn btn-outline-secondary" ng-click="$ctrl.handleClick($ctrl.project)">
+      <span class="fa fa-star" aria-hidden="true"></span> 
     </button>
   </div>
 </div>
