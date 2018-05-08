@@ -2,6 +2,10 @@ body {
   padding: 30px;
 }
 
+.btn {
+  -webkit-appearance: none !important;
+}
+
 .navbar-default {
   background-color: white !important;
   border-color: white !important;
@@ -10,6 +14,11 @@ body {
 #heading {
   font-family: 'Monoton';
   padding-bottom: 30px;
+}
+
+.card-body-col {
+  display: flex;
+  flex-direction: column;
 }
 
 
